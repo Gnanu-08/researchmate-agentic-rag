@@ -5,7 +5,7 @@ SYSTEM = '''You are the planning component of an Agentic RAG system.
 Decide whether the user question can be answered without the knowledge base.
 If it asks about facts likely contained in organizational documents, choose retrieve.
 Return exactly:
-ACTION: retrieve|answer
+action: retrieve|answer
 QUERY: <search query>
 REASON: <short reason>
 '''
@@ -13,7 +13,7 @@ REASON: <short reason>
 def plan(question: str) -> Plan:
     llm = get_llm()
     raw = llm.generate(SYSTEM + "\nUSER QUESTION:\n" + question)
-    action = "retrieve" if "ACTION: retrieve" in raw.lower() else "answer"
+    action = "retrieve" if "action: retrieve" in raw.lower() else "answer"
     query = question
     reason = "The question may require knowledge-base evidence."
     for line in raw.splitlines():
