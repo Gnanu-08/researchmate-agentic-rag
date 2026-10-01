@@ -13,7 +13,7 @@ def run_agent(question: str) -> AgentResponse:
              f"Query Analyzer: {analysis['query_type']} — "
              f"keywords: {', '.join(analysis['keywords'])}"
     )
-    p = plan(question)
+    p = plan(question, analysis)
     steps.append(f"Planner: {p.action} — {p.reason}")
 
     if p.action == "answer":
