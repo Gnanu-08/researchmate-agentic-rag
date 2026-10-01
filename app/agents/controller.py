@@ -22,6 +22,9 @@ def run_agent(question: str) -> AgentResponse:
 
     docs = []
     query = p.search_query
+
+    if analysis["keywords"]:
+       query = query + " " + " ".join(analysis["keywords"]) 
     for attempt in range(MAX_RETRIEVAL_ATTEMPTS):
         steps.append(f"Retriever attempt {attempt + 1}: {query}")
         docs = retrieve_evidence(query)
