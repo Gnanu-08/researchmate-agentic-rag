@@ -1,3 +1,4 @@
+from app.agents.query_analyzer import analyze_query
 from app.agents.planner import plan
 from app.agents.retriever import retrieve_evidence
 from app.agents.evaluator import evaluate
@@ -7,6 +8,11 @@ from app.models.schemas import AgentResponse, Source
 
 def run_agent(question: str) -> AgentResponse:
     steps = []
+    analysis = analyze_query(question)
+    steps.append(
+             f"Query Analyzer: {analysis['query_type']} — "
+             f"keywords: {', '.join(analysis['keywords'])}"
+    )
     p = plan(question)
     steps.append(f"Planner: {p.action} — {p.reason}")
 
